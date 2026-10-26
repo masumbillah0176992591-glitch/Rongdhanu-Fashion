@@ -38,24 +38,24 @@ dialog{border:0;border-radius:18px;padding:0;width:min(620px,calc(100% - 24px));
       <p>পছন্দের পোশাক বেছে নিন। অর্ডার করুন সহজে, মূল্য পরিশোধ করুন পণ্য হাতে পেয়ে।</p>
       <button class="btn" onclick="document.querySelector('#products').scrollIntoView({behavior:'smooth'})">পণ্য দেখুন ↓</button>
     </div>
-    <div class="hero-art" aria-label="ফ্যাশন ইলাস্ট্রেশন"><span>👗</span><span>👜</span><span>👕</span></div>
+    <div class="hero-art" aria-label="ফ্যাশন ইলাস্ট্রেশন"><span>👗</span><span>👜</span><span>🥻</span></div>
   </section>
 </header>
 <main class="wrap">
-  <div class="section-head"><div><h2 id="products">পণ্যসমূহ</h2><p>এগুলো শুধু নমুনা পণ্য—প্রকাশের আগে নিজের পণ্য, ছবি ও দাম বসান।</p></div></div>
+  <div class="section-head"><div><h2 id="products">পণ্যসমূহ</h2><p>আমাদের এক্সক্লুসিভ থ্রি-পিস কালেকশন থেকে আপনার পছন্দের পোশাকটি বেছে নিন।</p></div></div>
   <div class="controls">
     <div class="search"><input id="search" type="search" placeholder="পণ্যের নাম লিখে খুঁজুন…" aria-label="পণ্য খুঁজুন"></div>
     <select id="category" aria-label="ক্যাটাগরি">
-      <option value="সব">সব ক্যাটাগরি</option><option>নারীদের পোশাক</option><option>পুরুষদের পোশাক</option><option>ব্যাগ ও অ্যাক্সেসরিজ</option>
+      <option value="সব">সব ক্যাটাগরি</option><option>নারীদের পোশাক</option><option>থ্রি-পিস</option>
     </select>
   </div>
   <div class="grid" id="productGrid"></div>
   <div class="benefits">
-    <div class="benefit"><strong>🚚 সহজ ডেলিভারি</strong><span>আপনার ডেলিভারি এলাকা ও চার্জ দোকান চালুর আগে নির্ধারণ করুন।</span></div>
-    <div class="benefit"><strong>💵 ক্যাশ অন ডেলিভারি</strong><span>পণ্য হাতে পেয়ে মূল্য পরিশোধ করুন।</span></div>
-    <div class="benefit"><strong>💬 সহায়তা</strong><span>অর্ডার নিশ্চিত করার আগে ক্রেতার সঙ্গে যোগাযোগ করুন।</span></div>
+    <div class="benefit"><strong>🚚 সহজ ডেলিভারি</strong><span>সারা দেশে দ্রুত ক্যাশ অন ডেলিভারি সুবিধা।</span></div>
+    <div class="benefit"><strong>💵 ক্যাশ অন ডেলিভারি</strong><span>পণ্য হাতে পেয়ে যাচাই করে মূল্য পরিশোধ করুন।</span></div>
+    <div class="benefit"><strong>💬 সহায়তা</strong><span>যেকোনো প্রয়োজনে আমাদের সাথে যোগাযোগ করুন।</span></div>
   </div>
-  <p class="notice">গুরুত্বপূর্ণ: এই সাইটের অর্ডার Google Sheet-এ জমা দিতে README-এর নির্দেশনা অনুযায়ী বিনামূল্যের Apps Script সংযুক্ত করতে হবে। সংযোগ না করা পর্যন্ত অর্ডার বাস্তবে সংরক্ষিত হবে না।</p>
+  <p class="notice">গুরুত্বপূর্ণ: এই সাইটের অর্ডার Google Sheet-এ জমা দিতে README-এর নির্দেশনা অনুযায়ী বিনামূল্যের Apps Script সংযুক্ত করতে হবে।</p>
 </main>
 <footer><strong id="footerName">রঙধনু ফ্যাশন</strong><br>আপনার আস্থাই আমাদের অনুপ্রেরণা<br><span>© <span id="year"></span> · অনলাইন পোশাকের দোকান</span></footer>
 
@@ -80,16 +80,21 @@ dialog{border:0;border-radius:18px;padding:0;width:min(620px,calc(100% - 24px));
 <script>
 const STORE_NAME = "রঙধনু ফ্যাশন";
 const ORDER_ENDPOINT = ""; 
+
+// আপনার ছবিগুলোর ওপর ভিত্তি করে তৈরি পণ্যের তালিকা
 const PRODUCTS = [
- {id:"S001",name:"ফ্লোরাল কুর্তি",category:"নারীদের পোশাক",price:650,icon:"👗",desc:"নমুনা পণ্য · সাইজ ও কাপড়ের বিবরণ বদলান"},
- {id:"S002",name:"ক্যাজুয়াল টি-শার্ট",category:"পুরুষদের পোশাক",price:350,icon:"👕",desc:"নমুনা পণ্য · নিজের পণ্যের বিবরণ দিন"},
- {id:"S003",name:"স্টাইলিশ হ্যান্ডব্যাগ",category:"ব্যাগ ও অ্যাক্সেসরিজ",price:550,icon:"👜",desc:"নমুনা পণ্য · নিজের পণ্যের বিবরণ দিন"},
- {id:"S004",name:"আরামদায়ক থ্রি-পিস",category:"নারীদের পোশাক",price:1250,icon:"🥻",desc:"নমুনা পণ্য · সাইজ ও কাপড়ের বিবরণ বদলান"},
- {id:"S005",name:"পোলো শার্ট",category:"পুরুষদের পোশাক",price:480,icon:"👔",desc:"নমুনা পণ্য · নিজের পণ্যের বিবরণ দিন"},
- {id:"S006",name:"ফ্যাশন স্কার্ফ",category:"ব্যাগ ও অ্যাক্সেসরিজ",price:220,icon:"🧣",desc:"নমুনা পণ্য · নিজের পণ্যের বিবরণ দিন"},
- {id:"S007",name:"সিম্পল আবায়া",category:"নারীদের পোশাক",price:1450,icon:"🧥",desc:"নমুনা পণ্য · সাইজ ও কাপড়ের বিবরণ বদলান"},
- {id:"S008",name:"ক্যাজুয়াল শার্ট",category:"পুরুষদের পোশাক",price:750,icon:"👔",desc:"নমুনা পণ্য · নিজের পণ্যের বিবরণ দিন"}
+ {id:"S001",name:"ব্রাউন ফ্লোরাল থ্রি-পিস",category:"থ্রি-পিস",price:1250,icon:"🥻",desc:"আকর্ষণীয় ব্রাউন কালার প্রিন্টেড থ্রি-পিস ও ওড়না"},
+ {id:"S002",name:"ম্যাজেন্টা পিংক থ্রি-পিস",category:"থ্রি-পিস",price:1300,icon:"🥻",desc:"স্টাইলিশ ম্যাজেন্টা ও পিংক কম্বিনেশন থ্রি-পিস"},
+ {id:"S003",name:"মাস্টার্ড ইয়েলো থ্রি-পিস",category:"থ্রি-পিস",price:1250,icon:"🥻",desc:"উজ্জ্বল হলুদ রঙ ও আকর্ষণীয় ফ্লোরাল ডিজাইন"},
+ {id:"S004",name:"ক্লাসিক ব্ল্যাক থ্রি-পিস",category:"থ্রি-পিস",price:1350,icon:"🥻",desc:"মনোরম কালো ও মাল্টি-কালার ফ্লোরাল প্রিন্ট"},
+ {id:"S005",name:"ব্রাইট গোল্ডেন থ্রি-পিস",category:"থ্রি-পিস",price:1250,icon:"🥻",desc:"আরামদায়ক কাপড়ে প্রিমিয়াম হলুদ প্রিন্টের থ্রি-পিস"},
+ {id:"S006",name:"ডিপ ব্রাউন ডিজাইন থ্রি-পিস",category:"থ্রি-পিস",price:1300,icon:"🥻",desc:"রিচ ডিপ ব্রাউন কালার ফ্লোরাল গর্জিয়াস থ্রি-পিস"},
+ {id:"S007",name:"টিল ব্লু প্রিন্টেড থ্রি-পিস",category:"থ্রি-পিস",price:1350,icon:"🥻",desc:"নজরকাড়া টিল ব্লু এবং লাল ফুজি প্রিন্ট ডিজাইন"},
+ {id:"S008",name:"পার্পল ফ্লোরাল থ্রি-পিস",category:"থ্রি-পিস",price:1250,icon:"🥻",desc:"সুন্দর পার্পল শেডের আকর্ষণীয় থ্রি-পিস ও ওড়না"},
+ {id:"S009",name:"নেভি ব্লু গর্জিয়াস থ্রি-পিস",category:"থ্রি-পিস",price:1400,icon:"🥻",desc:"স্টাইলিশ নেভি ব্লু কালার ফ্লোরাল থ্রি-পিস কালেকশন"},
+ {id:"S010",name:"মারুন গ্রে থ্রি-পিস",category:"থ্রি-পিস",price:1300,icon:"🥻",desc:"মারুন ও গ্রে কম্বিনেশনের প্রিমিয়াম কোয়ালিটি থ্রি-পিস"}
 ];
+
 let cart = [];
 const bn = n => new Intl.NumberFormat("bn-BD").format(n);
 const money = n => "৳" + bn(n);
@@ -120,7 +125,6 @@ function changeQty(id,delta){
  renderCart();
 }
 
-// নতুন ডিলেট ফাংশন
 function removeFromCart(id){
   cart = cart.filter(x => x.id !== id);
   renderCart();
