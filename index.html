@@ -78,14 +78,8 @@ dialog{border:0;border-radius:18px;padding:0;width:min(620px,calc(100% - 24px));
   </div>
 </dialog>
 <script>
-/*
-  দোকানের সেটিংস:
-  1) STORE_NAME: নিজের দোকানের নাম দিন।
-  2) ORDER_ENDPOINT: README অনুযায়ী Google Apps Script Web App URL বসান।
-  3) নিচের PRODUCTS তালিকায় নিজের পণ্যের নাম, দাম, ক্যাটাগরি, বর্ণনা ও emoji/ছবি বদলান।
-*/
 const STORE_NAME = "রঙধনু ফ্যাশন";
-const ORDER_ENDPOINT = ""; // Apps Script Web App URL বসান; ফাঁকা থাকলে অর্ডার জমা হবে না।
+const ORDER_ENDPOINT = ""; 
 const PRODUCTS = [
  {id:"S001",name:"ফ্লোরাল কুর্তি",category:"নারীদের পোশাক",price:650,icon:"👗",desc:"নমুনা পণ্য · সাইজ ও কাপড়ের বিবরণ বদলান"},
  {id:"S002",name:"ক্যাজুয়াল টি-শার্ট",category:"পুরুষদের পোশাক",price:350,icon:"👕",desc:"নমুনা পণ্য · নিজের পণ্যের বিবরণ দিন"},
@@ -99,6 +93,7 @@ const PRODUCTS = [
 let cart = [];
 const bn = n => new Intl.NumberFormat("bn-BD").format(n);
 const money = n => "৳" + bn(n);
+
 function renderProducts(){
  const q=document.getElementById("search").value.trim().toLowerCase();
  const cat=document.getElementById("category").value;
@@ -108,18 +103,55 @@ function renderProducts(){
  <span class="tag">${p.category}</span><h3>${p.name}</h3><p class="desc">${p.desc}</p><div class="price">${money(p.price)}</div>
  <button class="btn" onclick="addToCart('${p.id}')">কার্টে যোগ করুন</button></div></article>`).join(""):`<div class="empty">কোনো পণ্য পাওয়া যায়নি।</div>`;
 }
-function addToCart(id){const p=PRODUCTS.find(x=>x.id===id);const found=cart.find(x=>x.id===id);if(found)found.qty++;else cart.push({...p,qty:1});renderCart();document.getElementById("cartDialog").showModal();}
-function changeQty(id,delta){const item=cart.find(x=>x.id===id);if(item)item.qty+=delta;cart=cart.filter(x=>x.qty>0);renderCart();}
+
+function addToCart(id){
+ const p=PRODUCTS.find(x=>x.id===id);
+ const found=cart.find(x=>x.id===id);
+ if(found)found.qty++;
+ else cart.push({...p,qty:1});
+ renderCart();
+ document.getElementById("cartDialog").showModal();
+}
+
+function changeQty(id,delta){
+ const item=cart.find(x=>x.id===id);
+ if(item)item.qty+=delta;
+ cart=cart.filter(x=>x.qty>0);
+ renderCart();
+}
+
+// নতুন ডিলেট ফাংশন
+function removeFromCart(id){
+  cart = cart.filter(x => x.id !== id);
+  renderCart();
+}
+
 function renderCart(){
  document.getElementById("cartCount").textContent=bn(cart.reduce((s,p)=>s+p.qty,0));
- document.getElementById("cartItems").innerHTML=cart.length?cart.map(p=>`<div class="cart-row"><div class="grow"><strong>${p.icon} ${p.name}</strong><div class="tag">${money(p.price)} × ${bn(p.qty)}</div></div><div class="qty"><button type="button" aria-label="একটি কমান" onclick="changeQty('${p.id}',-1)">−</button><span>${bn(p.qty)}</span><button type="button" aria-label="একটি বাড়ান" onclick="changeQty('${p.id}',1)">+</button></div></div>`).join(""):`<div class="empty">কার্ট খালি। আগে পণ্য যোগ করুন।</div>`;
+ 
+ document.getElementById("cartItems").innerHTML=cart.length?cart.map(p=>`
+   <div class="cart-row">
+     <div class="grow">
+       <strong>${p.icon} ${p.name}</strong>
+       <div class="tag">${money(p.price)} × ${bn(p.qty)}</div>
+     </div>
+     <div class="qty">
+       <button type="button" aria-label="একটি কমান" onclick="changeQty('${p.id}',-1)">−</button>
+       <span>${bn(p.qty)}</span>
+       <button type="button" aria-label="একটি বাড়ান" onclick="changeQty('${p.id}',1)">+</button>
+       <button type="button" style="border:1px solid var(--line);background:#fff;border-radius:7px;width:29px;height:29px;color:#d9534f;margin-left:4px;font-weight:bold;" aria-label="মুছে ফেলুন" onclick="removeFromCart('${p.id}')">✕</button>
+     </div>
+   </div>`).join(""):`<div class="empty">কার্ট খালি। আগে পণ্য যোগ করুন।</div>`;
+ 
  document.getElementById("totalPrice").textContent=money(cart.reduce((s,p)=>s+p.price*p.qty,0));
  document.getElementById("submitOrder").disabled=!cart.length;
 }
+
 document.getElementById("openCart").addEventListener("click",()=>document.getElementById("cartDialog").showModal());
 document.getElementById("closeCart").addEventListener("click",()=>document.getElementById("cartDialog").close());
 document.getElementById("search").addEventListener("input",renderProducts);
 document.getElementById("category").addEventListener("change",renderProducts);
+
 document.getElementById("orderForm").addEventListener("submit",async e=>{
  e.preventDefault();
  const status=document.getElementById("formStatus");
@@ -129,8 +161,6 @@ document.getElementById("orderForm").addEventListener("submit",async e=>{
  const form=new FormData(e.target);
  const order={store:STORE_NAME,customer:{name:form.get("name"),phone:form.get("phone"),address:form.get("address"),notes:form.get("notes")},payment:"ক্যাশ অন ডেলিভারি",items:cart.map(p=>({id:p.id,name:p.name,price:p.price,quantity:p.qty})),total:cart.reduce((s,p)=>s+p.price*p.qty,0),createdAt:new Date().toISOString()};
  try{
-   // Apps Script cross-origin response may be opaque; a successful fetch only means the request was sent,
-   // not that the server confirmed writing. Check the linked Google Sheet before treating it as confirmed.
    await fetch(ORDER_ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(order)});
    status.textContent="অর্ডার অনুরোধ পাঠানো হয়েছে। এটি নিশ্চিত হয়েছে কি না জানতে দোকানের মালিক Google Sheet পরীক্ষা করবেন।";
    cart=[];renderCart();e.target.reset();button.textContent="অর্ডার পাঠানো হয়েছে";
@@ -139,6 +169,7 @@ document.getElementById("orderForm").addEventListener("submit",async e=>{
    button.disabled=false;button.textContent="আবার চেষ্টা করুন";
  }
 });
+
 document.getElementById("brandName").childNodes[0].textContent=STORE_NAME;
 document.getElementById("footerName").textContent=STORE_NAME;
 document.getElementById("year").textContent=new Date().getFullYear();
