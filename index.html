@@ -1,245 +1,135 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#174c3c">
-<title>রঙধনু ফ্যাশন | অনলাইন পোশাকের দোকান</title>
-<style>
-:root{--bg:#0c2118;--card-bg:#133324;--accent:#174c3c;--green2:#23634d;--cream:#f7f5ef;--gold:#e9c982;--orange:#f85606;--text:#f0f5f2;--muted:#b8c7be;--line:#1f4a36}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans Bengali","Nirmala UI",sans-serif;line-height:1.55}
-button,input,select,textarea{font:inherit}button{cursor:pointer}
-.topbar{background:#081811;color:var(--gold);text-align:center;padding:7px 12px;font-size:13px;font-weight:600}
-header{background:var(--accent);color:white;padding:14px max(16px,calc((100% - 1120px)/2)) 20px;border-bottom:1px solid var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;gap:14px}
-.brand-box{display:flex;align-items:center;gap:12px;background:var(--card-bg);padding:8px 14px;border-radius:14px;border:1px solid var(--line)}
-.brand-icon{font-size:22px;background:var(--gold);width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:10px}
-.brand{font-size:18px;font-weight:800;letter-spacing:.2px;color:#fff}.brand small{display:block;font-size:11px;font-weight:400;color:var(--muted)}
-.cart-btn{border:1px solid var(--line);background:var(--card-bg);color:#fff;border-radius:12px;padding:8px 14px;font-weight:700;display:flex;align-items:center;gap:6px}
-
-/* দারাজ স্টাইল ব্যানার / স্লাইডার */
-.promo-banner{max-width:1120px;margin:20px auto 0;border-radius:20px;background:linear-gradient(135deg,#f85606,#ff9f00);color:#fff;padding:24px 28px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 10px 30px rgba(248,86,6,0.3)}
-.banner-text span{background:#fff;color:#f85606;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:800}
-.banner-text h1{font-size:clamp(22px,3.5vw,32px);margin:8px 0 6px;line-height:1.2}
-.banner-text p{margin:0;font-size:14px;opacity:.9}
-.banner-badge{font-size:42px;background:#ffffff20;padding:12px 18px;border-radius:16px;backdrop-filter:blur(5px)}
-
-.wrap{max-width:1120px;margin:auto;padding:24px 16px 56px}
-.search-bar{margin:20px 0;background:var(--card-bg);border:1px solid var(--line);border-radius:14px;padding:10px 14px;display:flex;align-items:center}
-.search-bar input{width:100%;border:0;background:transparent;color:var(--text);outline:none;font-size:15px}
-
-.section-head{margin-bottom:14px}.section-head h2{margin:0;font-size:20px;color:#fff}
-.category-pills{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 20px}
-.pill{border:1px solid var(--line);background:var(--card-bg);color:var(--muted);padding:7px 14px;border-radius:18px;font-size:13px;font-weight:600;transition:.2s}
-.pill.active,.pill:hover{background:var(--green2);color:#fff;border-color:var(--green2)}
-
-/* দারাজ স্টাইল প্রোডাক্ট কার্ড */
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.product{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card-bg);display:flex;flex-direction:column;position:relative}
-.discount-badge{position:absolute;top:10px;left:10px;background:var(--orange);color:#fff;font-size:11px;font-weight:800;padding:3px 8px;border-radius:8px;z-index:2}
-.product-art{height:150px;display:flex;align-items:center;justify-content:center;font-size:52px;background:#18402f}
-.product-body{padding:12px;display:flex;flex-direction:column;gap:5px;flex:1}
-.tag{font-size:11px;color:var(--muted)}.product h3{font-size:15px;margin:0;color:#fff}
-.desc{font-size:12px;color:var(--muted);margin:0;flex:1}
-.price-box{display:flex;align-items:center;gap:8px;margin:4px 0}
-.price{font-size:17px;font-weight:800;color:var(--gold)}
-.old-price{font-size:13px;color:var(--muted);text-decoration:line-through}
-.btn{border:0;border-radius:10px;padding:9px 12px;background:var(--green2);color:white;font-weight:700;width:100%;font-size:13px}
-.btn:hover{background:#2a755b}.btn:disabled{opacity:.5;cursor:not-allowed}
-
-footer{background:#081811;color:var(--muted);padding:22px 16px;text-align:center;font-size:13px;border-top:1px solid var(--line)}
-.notice{font-size:12px;color:var(--muted);margin-top:14px}
-
-dialog{border:0;border-radius:16px;padding:0;width:min(500px,calc(100% - 20px));max-height:90vh;overflow:auto;background:var(--card-bg);color:var(--text);box-shadow:0 20px 80px #000a}
-dialog::backdrop{background:#0c211acc}
-.modal-head{padding:16px 18px;background:var(--accent);color:white;display:flex;justify-content:space-between;align-items:center}
-.modal-head h2{font-size:17px;margin:0}.xbtn{border:0;background:#ffffff20;color:white;border-radius:6px;padding:4px 8px}
-.modal-content{padding:18px}.cart-row{display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding:10px 0}
-.cart-row .grow{flex:1}.qty{display:flex;align-items:center;gap:6px}
-.qty button{border:1px solid var(--line);background:var(--bg);color:#fff;border-radius:6px;width:25px;height:25px}
-.total{display:flex;justify-content:space-between;font-weight:800;font-size:17px;padding:12px 0;color:var(--gold)}
-.field{margin:10px 0}.field label{display:block;font-weight:600;font-size:12px;margin-bottom:4px;color:var(--muted)}
-.field input,.field textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;background:var(--bg);color:var(--text)}
-.field textarea{min-height:65px;resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.empty{text-align:center;padding:20px;color:var(--muted)}
-
-@media(max-width:780px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.promo-banner{flex-direction:column;text-align:center;gap:12px}}
-@media(max-width:380px){.grid{grid-template-columns:1fr}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rongdhanu Fashion - থ্রিপিস কালেকশন</title>
+    <style>
+        body {
+            font-family: 'SolaimanLipi', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #f57224;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            text-align: center;
+            padding-bottom: 15px;
+        }
+        .product-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .product-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+        .product-title {
+            font-size: 16px;
+            color: #333;
+            margin: 15px 10px 10px 10px;
+        }
+        .product-price {
+            color: #f57224;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .buy-btn {
+            background-color: #f57224;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .buy-btn:hover {
+            background-color: #d45b1b;
+        }
+    </style>
 </head>
 <body>
-<div class="topbar">⚡ মেগা ক্যাম্পেইন · ক্যাশ অন ডেলিভারি · সারা দেশে হোম ডেলিভারি</div>
-<header>
-  <div class="nav">
-    <div class="brand-box">
-      <div class="brand-icon">🛍️</div>
-      <div class="brand" id="brandName">রঙধনু ফ্যাশন<small>আপনার স্টাইল, আপনার পছন্দ</small></div>
+
+    <header>
+        রংধনু ফ্যাশন (Rongdhanu Fashion)
+    </header>
+
+    <div class="container">
+        <div class="product-grid">
+            
+            <!-- প্রডাক্ট ১ -->
+            <div class="product-card">
+                <img src="IMG-20261025-WA0036.jpg" alt="থ্রিপিস">
+                <div class="product-title">স্টাইলিশ এক্সক্লুসিভ থ্রিপিস</div>
+                <div class="product-price">৳ ১,৫৫০</div>
+                <button class="buy-btn">অর্ডার করুন</button>
+            </div>
+
+            <!-- প্রডাক্ট ২ -->
+            <div class="product-card">
+                <img src="IMG-20261025-WA0006.jpg" alt="থ্রিপিস">
+                <div class="product-title">ফ্যাশনেবল প্রিমিয়াম থ্রিপিস</div>
+                <div class="product-price">৳ ১,৬৫০</div>
+                <button class="buy-btn">অর্ডার করুন</button>
+            </div>
+
+            <!-- প্রডাক্ট ৩ -->
+            <div class="product-card">
+                <img src="IMG-20261025-WA0010.jpg" alt="থ্রিপিস">
+                <div class="product-title">আকর্ষণীয় ডিজাইনের থ্রিপিস</div>
+                <div class="product-price">৳ ১,৮০০</div>
+                <button class="buy-btn">অর্ডার করুন</button>
+            </div>
+
+            <!-- প্রডাক্ট ৪ -->
+            <div class="product-card">
+                <img src="IMG-20261025-WA0013.jpg" alt="থ্রিপিস">
+                <div class="product-title">নরম ও আরামদায়ক সুতি থ্রিপিস</div>
+                <div class="product-price">৳ ১,৪০০</div>
+                <button class="buy-btn">অর্ডার করুন</button>
+            </div>
+
+            <!-- প্রডাক্ট ৫ -->
+            <div class="product-card">
+                <img src="IMG-20261025-WA0011.jpg" alt="থ্রিপিস">
+                <div class="product-title">পার্টি ওয়্যার এমব্রয়ডারি থ্রিপিস</div>
+                <div class="product-price">৳ ২,২০০</div>
+                <button class="buy-btn">অর্ডার করুন</button>
+            </div>
+
+            <!-- প্রডাক্ট ৬ -->
+            <div class="product-card">
+                <img src="IMG-20261025-WA0024.jpg" alt="থ্রিপিস">
+                <div class="product-title">ক্ল্যাসিক কালেকশন থ্রিপিস</div>
+                <div class="product-price">৳ ১,৭৫০</div>
+                <button class="buy-btn">অর্ডার করুন</button>
+            </div>
+
+        </div>
     </div>
-    <button class="cart-btn" id="openCart">🛒 কার্ট <span id="cartCount">০</span></button>
-  </div>
-</header>
 
-<!-- দারাজ স্টাইল প্রমোশনাল ব্যানার -->
-<div class="promo-banner">
-  <div class="banner-text">
-    <span>স্পেশাল অফার</span>
-    <h1>ঈদ ও উৎসব কালেকশন ২০২৬</h1>
-    <p>পছন্দের থ্রি-পিসে আকর্ষণীয় ছাড়! আজই অর্ডার করুন।</p>
-  </div>
-  <div class="banner-badge">🎁</div>
-</div>
-
-<main class="wrap">
-  <!-- সার্চ বক্স -->
-  <div class="search-bar">
-    <input id="search" type="search" placeholder="দারাজের মতো সহজে পণ্য খুঁজুন…" aria-label="পণ্য খুঁজুন">
-  </div>
-
-  <div class="section-head"><h2 id="products">আমাদের এক্সক্লুসিভ পণ্যসমূহ</h2></div>
-  
-  <!-- ক্যাটাগরি পিলস -->
-  <div class="category-pills" id="categoryPills">
-    <button class="pill active" onclick="setCategory('সব', this)">সব পণ্য</button>
-    <button class="pill" onclick="setCategory('থ্রি-পিস', this)">থ্রি-পিস</button>
-    <button class="pill" onclick="setCategory('পোশাক', this)">অন্যান্য পোশাক</button>
-  </div>
-
-  <div class="grid" id="productGrid"></div>
-  <p class="notice">পরামর্শ: এই সাইটের অর্ডার সরাসরি গুগল শিটে যুক্ত করতে README ফাইল অনুযায়ী Apps Script কনফিগার করে নিন।</p>
-</main>
-
-<footer><strong id="footerName">রঙধনু ফ্যাশন</strong><br>আপনার আস্থাই আমাদের অনুপ্রেরণা<br><span>© <span id="year"></span> · অনলাইন পোশাকের দোকান</span></footer>
-
-<dialog id="cartDialog">
-  <div class="modal-head"><h2>আপনার শপিং কার্ট</h2><button class="xbtn" id="closeCart">বন্ধ ✕</button></div>
-  <div class="modal-content">
-    <div id="cartItems"></div>
-    <div class="total"><span>মোট মূল্য</span><span id="totalPrice">৳০</span></div>
-    <form id="orderForm">
-      <div class="two">
-        <div class="field"><label for="customerName">আপনার নাম *</label><input id="customerName" name="name" required maxlength="100"></div>
-        <div class="field"><label for="phone">মোবাইল নম্বর *</label><input id="phone" name="phone" required maxlength="20" placeholder="01XXXXXXXXX"></div>
-      </div>
-      <div class="field"><label for="address">সম্পূর্ণ ঠিকানা *</label><textarea id="address" name="address" required maxlength="500" placeholder="বাড়ি/রোড, এলাকা, জেলা"></textarea></div>
-      <div class="field"><label for="notes">অতিরিক্ত তথ্য (ঐচ্ছিক)</label><textarea id="notes" name="notes" maxlength="500" placeholder="সাইজ বা রঙের নির্দেশনা"></textarea></div>
-      <button class="btn" id="submitOrder" type="submit" style="width:100%; margin-top:8px; background:var(--orange);">ক্যাশ অন ডেলিভারিতে অর্ডার করুন</button>
-      <p id="formStatus" class="notice" role="status"></p>
-    </form>
-  </div>
-</dialog>
-
-<script>
-const STORE_NAME = "রঙধনু ফ্যাশন";
-const ORDER_ENDPOINT = ""; 
-
-const PRODUCTS = [
- {id:"S001",name:"ব্রাউন ফ্লোরাল থ্রি-পিস",category:"থ্রি-পিস",price:1250,originalPrice:1600,discount:"২২% ছাড়",icon:"🥻",desc:"আকর্ষণীয় ব্রাউন কালার প্রিন্টেড থ্রি-পিস ও ওড়না"},
- {id:"S002",name:"ম্যাজেন্টা পিংক থ্রি-পিস",category:"থ্রি-পিস",price:1300,originalPrice:1700,discount:"২৩% ছাড়",icon:"🥻",desc:"স্টাইলিশ ম্যাজেন্টা ও পিংক কম্বিনেশন থ্রি-পিস"},
- {id:"S003",name:"মাস্টার্ড ইয়েলো থ্রি-পিস",category:"থ্রি-পিস",price:1250,originalPrice:1500,discount:"১৭% ছাড়",icon:"🥻",desc:"উজ্জ্বল হলুদ রঙ ও আকর্ষণীয় ফ্লোরাল ডিজাইন"},
- {id:"S004",name:"ক্লাসিক ব্ল্যাক থ্রি-পিস",category:"থ্রি-পিস",price:1350,originalPrice:1800,discount:"২৫% ছাড়",icon:"🥻",desc:"মনোরম কালো ও মাল্টি-কালার ফ্লোরাল প্রিন্ট"},
- {id:"S005",name:"ব্রাইট গোল্ডেন থ্রি-পিস",category:"থ্রি-পিস",price:1250,originalPrice:1600,discount:"২২% ছাড়",icon:"🥻",desc:"আরামদায়ক কাপড়ে প্রিমিয়াম হলুদ প্রিন্টের থ্রি-পিস"},
- {id:"S006",name:"ডিপ ব্রাউন ডিজাইন থ্রি-পিস",category:"থ্রি-পিস",price:1300,originalPrice:1700,discount:"২৩% ছাড়",icon:"🥻",desc:"রিচ ডিপ ব্রাউন কালার ফ্লোরাল গর্জিয়াস থ্রি-পিস"}
-];
-
-let selectedCategory = "সব";
-let cart = [];
-const bn = n => new Intl.NumberFormat("bn-BD").format(n);
-const money = n => "৳" + bn(n);
-
-function setCategory(cat, btn){
-  selectedCategory = cat;
-  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  renderProducts();
-}
-
-function renderProducts(){
- const q = document.getElementById("search").value.trim().toLowerCase();
- const list = PRODUCTS.filter(p => (selectedCategory === "সব" || p.category === selectedCategory) && p.name.toLowerCase().includes(q));
- document.getElementById("productGrid").innerHTML = list.length ? list.map(p=>`
- <article class="product">
-   <div class="discount-badge">${p.discount}</div>
-   <div class="product-art" aria-hidden="true">${p.icon}</div>
-   <div class="product-body">
-     <span class="tag">${p.category}</span>
-     <h3>${p.name}</h3>
-     <p class="desc">${p.desc}</p>
-     <div class="price-box">
-       <div class="price">${money(p.price)}</div>
-       <div class="old-price">${money(p.originalPrice)}</div>
-     </div>
-     <button class="btn" onclick="addToCart('${p.id}')">কার্টে যোগ করুন</button>
-   </div>
- </article>`).join("") : `<div class="empty">কোনো পণ্য পাওয়া যায়নি।</div>`;
-}
-
-function addToCart(id){
- const p = PRODUCTS.find(x => x.id === id);
- const found = cart.find(x => x.id === id);
- if(found) found.qty++;
- else cart.push({...p, qty:1});
- renderCart();
- document.getElementById("cartDialog").showModal();
-}
-
-function changeQty(id, delta){
- const item = cart.find(x => x.id === id);
- if(item) item.qty += delta;
- cart = cart.filter(x => x.qty > 0);
- renderCart();
-}
-
-function removeFromCart(id){
-  cart = cart.filter(x => x.id !== id);
-  renderCart();
-}
-
-function renderCart(){
- document.getElementById("cartCount").textContent = bn(cart.reduce((s,p) => s + p.qty, 0));
- document.getElementById("cartItems").innerHTML = cart.length ? cart.map(p=>`
-   <div class="cart-row">
-     <div class="grow">
-       <strong>${p.icon} ${p.name}</strong>
-       <div class="tag">${money(p.price)} × ${bn(p.qty)}</div>
-     </div>
-     <div class="qty">
-       <button type="button" onclick="changeQty('${p.id}',-1)">−</button>
-       <span>${bn(p.qty)}</span>
-       <button type="button" onclick="changeQty('${p.id}',1)">+</button>
-       <button type="button" style="border:1px solid var(--line);background:var(--bg);border-radius:6px;width:25px;height:25px;color:#ff6b6b;font-weight:bold;margin-left:4px;" onclick="removeFromCart('${p.id}')">✕</button>
-     </div>
-   </div>`).join("") : `<div class="empty">কার্ট খালি।</div>`;
- 
- document.getElementById("totalPrice").textContent = money(cart.reduce((s,p) => s + p.price * p.qty, 0));
- document.getElementById("submitOrder").disabled = !cart.length;
-}
-
-document.getElementById("openCart").addEventListener("click", () => document.getElementById("cartDialog").showModal());
-document.getElementById("closeCart").addEventListener("click", () => document.getElementById("cartDialog").close());
-document.getElementById("search").addEventListener("input", renderProducts);
-
-document.getElementById("orderForm").addEventListener("submit", async e=>{
- e.preventDefault();
- const status = document.getElementById("formStatus");
- if(!cart.length){ status.textContent = "কার্টে পণ্য যোগ করুন।"; return; }
- if(!ORDER_ENDPOINT){ status.textContent = "দয়া করে ORDER_ENDPOINT সেট করুন।"; return; }
- const button = document.getElementById("submitOrder"); button.disabled = true; button.textContent = "অর্ডার পাঠানো হচ্ছে…";
- const form = new FormData(e.target);
- const order = {store:STORE_NAME, customer:{name:form.get("name"), phone:form.get("phone"), address:form.get("address"), notes:form.get("notes")}, payment:"ক্যাশ অন ডেলিভারি", items:cart.map(p=>({id:p.id, name:p.name, price:p.price, quantity:p.qty})), total:cart.reduce((s,p)=>s+p.price*p.qty,0), createdAt:new Date().toISOString()};
- try{
-   await fetch(ORDER_ENDPOINT, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(order)});
-   status.textContent="অর্ডার সফলভাবে পাঠানো হয়েছে!";
-   cart = []; renderCart(); e.target.reset(); button.textContent="অর্ডার সম্পন্ন";
- }catch(err){
-   status.textContent="অর্ডার পাঠানো যায়নি। আবার চেষ্টা করুন।";
-   button.disabled = false; button.textContent = "আবার চেষ্টা করুন";
- }
-});
-
-document.getElementById("brandName").childNodes[0].textContent = STORE_NAME;
-document.getElementById("footerName").textContent = STORE_NAME;
-document.getElementById("year").textContent = new Date().getFullYear();
-renderProducts(); renderCart();
-</script>
 </body>
 </html>
